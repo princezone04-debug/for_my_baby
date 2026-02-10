@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>For Mikee 💖</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: env(safe-area-inset-top)
+             env(safe-area-inset-right)
+             env(safe-area-inset-bottom)
+             env(safe-area-inset-left);
+    background: linear-gradient(135deg, #ff6f91, #ffb6c1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    background: white;
+    width: 90%;
+    max-width: 340px;
+    padding: 25px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  }
+
+  img {
+    width: 160px;
+    border-radius: 14px;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 22px;
+    color: #ff4d6d;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    height: 60px;
+  }
+
+  button {
+    padding: 14px 22px;
+    font-size: 16px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    min-width: 120px;
+  }
+
+  #yesBtn {
+    background: #ff4d6d;
+    color: white;
+    z-index: 2;
+  }
+
+  #noBtn {
+    background: #e0e0e0;
+    position: absolute;
+  }
+
+  .yes-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .heart {
+    font-size: 60px;
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="mainCard">
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHRqd3R1dW5qdW0ycmJqZ3E5MWF5c25iNm15N3N4M2R2a2ZtcjB6ZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/MDJ9IbxxvDUQM/giphy.gif">
+  <h1>Mikee… will you be my Valentine? 💕</h1>
+  <p id="message">Baby, I’ll take care of you forever 😌</p>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 😐</button>
+  </div>
+</div>
+
+<div class="card yes-screen" id="yesScreen">
+  <div class="heart">💖💖💖</div>
+  <h1>YAY BABY 🥹💘</h1>
+  <p>
+    Mikee, you’re officially  
+    <strong>my Valentine</strong> now 😏  
+  </p>
+  <p>I love you, baby 💞</p>
+</div>
+
+<audio id="pop" src="https://www.myinstants.com/media/sounds/pop.mp3"></audio>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const message = document.getElementById("message");
+  const mainCard = document.getElementById("mainCard");
+  const yesScreen = document.getElementById("yesScreen");
+  const pop = document.getElementById("pop");
+
+  let scale = 1;
+  let count = 0;
+
+  const messages = [
+    "Baby 😐 don’t do that",
+    "Mikee… why you hurting me 😭",
+    "That kinda hurt, baby 🥲",
+    "Stop playing and say yes 😤",
+    "You know you’re mine 😏",
+    "Okay now you’re just teasing 😌"
+  ];
+
+  function moveNoButton() {
+    pop.play();
+
+    const container = document.querySelector(".buttons");
+    const maxX = container.offsetWidth - noBtn.offsetWidth;
+    const maxY = container.offsetHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+
+    scale -= 0.08;
+    if (scale < 0.6) scale = 0.6;
+    noBtn.style.transform = `scale(${scale})`;
+
+    message.textContent = messages[count % messages.length];
+    count++;
+  }
+
+  noBtn.addEventListener("touchstart", moveNoButton);
+  noBtn.addEventListener("mouseover", moveNoButton);
+  noBtn.addEventListener("click", showYes);
+  yesBtn.addEventListener("click", showYes);
+
+  function showYes() {
+    mainCard.style.display = "none";
+    yesScreen.style.display = "flex";
+  }
+</script>
+
+</body>
+</html>
